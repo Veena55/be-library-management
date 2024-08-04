@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Student.hasMany(models.Library, { foreignKey: 'studentId', as: 'library' });
+      Student.hasMany(models.Library, { foreignKey: 'studentId', as: 'library', onDelete: 'CASCADE' });
     }
   }
   Student.init({

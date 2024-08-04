@@ -10,7 +10,10 @@ const uploadMedia = upload.fields([
     { name: 'video', maxCount: 1 }
 ]);
 
-router.get("/", ErrorHandler.withErrorHandling(student.all));
+router.get("/all", ErrorHandler.withErrorHandling(student.all));
 router.post("/add", uploadMedia, ErrorHandler.withErrorHandling(student.add));
+router.get("/edit/:id", ErrorHandler.withErrorHandling(student.edit));
+router.put("/edit_data/:id", uploadMedia, ErrorHandler.withErrorHandling(student.editData));
+router.delete("/delete/:id", ErrorHandler.withErrorHandling(student.delete));
 
 module.exports = router;
