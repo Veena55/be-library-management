@@ -1,6 +1,4 @@
-const { where } = require("sequelize");
-const ErrorHandler = require("../middlewares/errorHandler");
-const { Student } = require("../models");
+const { Student, Library } = require("../models");
 
 class StudentController {
     async all(req, res) {
@@ -60,6 +58,14 @@ class StudentController {
         const { id } = req.params;
         const response = await Student.destroy({ where: { id: id } });
         console.log(response, id);
+        console.log("====deltID==");
+
+        if (response) {
+            console.log(id);
+            const res2 = await Library.destroy({ where: { studentId: id } });
+            console.log(res2);
+
+        }
         res.json(response);
 
     }

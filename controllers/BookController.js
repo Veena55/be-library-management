@@ -45,6 +45,7 @@ class BookController {
     async delete(req, res) {
         const { id } = req.params;
         const response = await Book.destroy({ where: { id: id } });
+
         res.json(response);
 
     }
