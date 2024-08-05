@@ -22,10 +22,20 @@ class LibraryController {
 
 
     async add(req, res) {
-        const { studentId, bookId, startdate, enddate } = req.body;
-        req.body.bookId = JSON.parse(bookId).id;
-        const libraryList = await Library.create(req.body);
-        return res.json(libraryList);
+        const newRecord = await Library.create(req.body);
+        if (newRecord) {
+            const bookId = req.body.bookId;
+            const book = await Book.findOne({ where: { id: bookId } });
+
+            const newQuantity = Math.max(0, book.quantity - 1);
+
+            const updateBookQuantity = await Book.update({ quantity: newQuantity }, {
+                where: { id: bookId }
+            });
+            console.log(updateBookQuantity, "==========");
+        }
+
+        return res.json({ success: "New Record Added!!" });
     }
 
     async allStudents(req, res) {
@@ -42,9 +52,9 @@ class LibraryController {
     }
     async editData(req, res) {
         const id = req.params.id;
-        const { studentId, bookId, startdate, enddate } = req.body;
-        req.body.bookId = JSON.parse(bookId).id;
-        console.log(req.body, "");
+        // const { studentId, bookId, startdate, enddate } = req.body;
+        // req.body.bookId = JSON.parse(bookId).id;
+        console.log(req.body, "Hi");
         const affectedRows = await Library.update(req.body, {
             where: {
                 id: id
